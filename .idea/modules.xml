@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/StarFish.iml" filepath="$PROJECT_DIR$/StarFish.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StarFish_main.iml" filepath="$PROJECT_DIR$/.idea/modules/StarFish_main.iml" group="StarFish" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StarFish_test.iml" filepath="$PROJECT_DIR$/.idea/modules/StarFish_test.iml" group="StarFish" />
+    </modules>
+  </component>
+</project>
