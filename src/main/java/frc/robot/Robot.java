@@ -7,7 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveBase;
@@ -48,6 +50,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    mDrive.outputToSmartDashboard();
+
+
   }
 
   /**
@@ -89,6 +94,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+//    mDrive.getmDiffDrive_().
+  }
+
+  public void disabledPeriodic(){
+    mDrive.stop();
   }
 
   /**
