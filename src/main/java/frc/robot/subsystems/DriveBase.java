@@ -23,7 +23,9 @@ public class DriveBase extends Subsystem {
     private final WPI_TalonSRX leftMaster_, leftSlave_, rightMaster_, rightSlave_;
     private final SpeedControllerGroup left_, right_;
     private final ADXRS450_Gyro gyro_;
+//    private final ADXL362 accelerometer_;
 
+    private boolean isGyroCalibrating = false;
     // The constructor instantiates all of the drivetrain components when the
     // robot powers up
 
@@ -38,14 +40,15 @@ public class DriveBase extends Subsystem {
 
         mDiffDrive_ = new DifferentialDrive(left_, right_);
 
-        gyro_ = new ADXRS450_Gyro(Constants.id_gyroSPIPort);
-
         // Start in open loop mode
         leftMaster_.set(ControlMode.PercentOutput, 0);
         leftSlave_.follow(leftMaster_);
         rightMaster_.set(ControlMode.PercentOutput, 0);
         rightSlave_.follow(rightMaster_);
         rightMaster_.setInverted(true);
+        // Establish Gyro & Accelerometer TODO: Determine if we really need an accelerometer
+        gyro_ = new ADXRS450_Gyro(Constants.id_gyroSPIPort);
+//        accelerometer_ = new ADXL362();
     }
 
     public ADXRS450_Gyro getGyro() {
