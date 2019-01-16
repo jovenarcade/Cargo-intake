@@ -98,8 +98,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    mDrive.getDrive().arcadeDrive(m_joystick.getX(), m_joystick.getY());
-
+    mDrive.getDrive().arcadeDrive(m_joystick.getY(), m_joystick.getX());
   }
 
   public void disabledPeriodic(){
