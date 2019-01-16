@@ -74,9 +74,9 @@ public class DriveBase extends Subsystem {
 
     public void calibrateGyro(){
         Timer.delay(0.1);
-        gyro_.calibrate();
-        System.out.println("Gyro Calibration Started...");
         isGyroCalibrating = true;
+        System.out.println("Gyro Calibration Started...");
+        gyro_.calibrate();
         Timer.delay(Constants.kGyroCaliibrateAvgTime);
         System.out.println("Gyro Calibration Finished.");
         isGyroCalibrating = false;

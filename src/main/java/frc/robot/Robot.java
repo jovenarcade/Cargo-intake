@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -104,12 +105,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    mDrive.getDrive().arcadeDrive(m_joystick.getX(), m_joystick.getY());
-
+    // mDrive.getDrive().arcadeDrive(m_joystick.getX(), m_joystick.getY());
+    mDrive.getDrive().tankDrive(m_joystick.getX(GenericHID.Hand.kLeft), m_joystick.getY(GenericHID.Hand.kRight));
   }
 
   public void disabledPeriodic(){
     mDrive.stop();
+  }
+
+  public void testInit(){
+    SmartDashboard.putBoolean("enableGyroSpinTest", false);
+
   }
 
   /**
