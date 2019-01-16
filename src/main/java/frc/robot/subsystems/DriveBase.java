@@ -3,9 +3,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
@@ -20,24 +19,24 @@ public class DriveBase extends Subsystem {
         return instance_;
     }
 
-//    private final DifferentialDrive mDiffDrive_;
-    private final TalonSRX leftMaster_, leftSlave_, rightMaster_, rightSlave_;
-//    private final SpeedControllerGroup left_, right_;
+    private final DifferentialDrive mDiffDrive_;
+    private final WPI_TalonSRX leftMaster_, leftSlave_, rightMaster_, rightSlave_;
+    private final SpeedControllerGroup left_, right_;
     private final ADXRS450_Gyro gyro_;
 
     // The constructor instantiates all of the drivetrain components when the
     // robot powers up
 
     private DriveBase() {
-        leftMaster_ = new TalonSRX(Constants.id_driveLeftMaster);
-        leftSlave_ = new TalonSRX(Constants.id_driveLeftSlave);
-        rightMaster_ = new TalonSRX(Constants.id_driveRightMaster);
-        rightSlave_ = new TalonSRX(Constants.id_driveRightSlave);
+        leftMaster_ = new WPI_TalonSRX(Constants.id_driveLeftMaster);
+        leftSlave_ = new WPI_TalonSRX(Constants.id_driveLeftSlave);
+        rightMaster_ = new WPI_TalonSRX(Constants.id_driveRightMaster);
+        rightSlave_ = new WPI_TalonSRX(Constants.id_driveRightSlave);
 
-//        left_ = new SpeedControllerGroup(leftMaster_, leftSlave_);
-//        right_ = new SpeedControllerGroup(rightMaster_, rightSlave_);
+        left_ = new SpeedControllerGroup(leftMaster_, leftSlave_);
+        right_ = new SpeedControllerGroup(rightMaster_, rightSlave_);
 
-//        mDiffDrive_ = new DifferentialDrive(left_, right_);
+        mDiffDrive_ = new DifferentialDrive(left_, right_);
 
         gyro_ = new ADXRS450_Gyro(Constants.id_gyroSPIPort);
 
@@ -53,9 +52,9 @@ public class DriveBase extends Subsystem {
         return gyro_;
     }
 
-//    public DifferentialDrive getmDiffDrive_(){
-//        return mDiffDrive_;
-//    }
+    public DifferentialDrive getDrive(){
+        return mDiffDrive_;
+    }
 
     public void gyroSpinTest(int desiredAngle){
 

@@ -27,6 +27,10 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  /*TODO: Temp for testing*/
+  private Joystick m_joystick = new Joystick(0);
+  //
+
   DriveBase mDrive = DriveBase.getInstance();
 
   /**
@@ -94,7 +98,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-//    mDrive.getmDiffDrive_().
+    mDrive.getDrive().arcadeDrive(m_joystick.getX(), m_joystick.getY());
+
   }
 
   public void disabledPeriodic(){
