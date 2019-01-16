@@ -45,7 +45,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
 
     //Restart Robot Code @ beginning of every match. This will zero gyro. Takes ~10 sec
-    mDrive.calibrateGyro();
+    // mDrive.calibrateGyro();
+    mDrive.getGyro().calibrate(); //Switched because it was delaying robot init
     mDrive.zeroSensors();
   }
 
