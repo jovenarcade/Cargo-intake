@@ -9,9 +9,18 @@ import edu.wpi.first.wpilibj.SPI;
 
 public class Constants {
 
-    /***********HARDWARE_IDs**********/
+    /***********GYRO STUFF**********/
 
+    //Gyro physical location
     public static SPI.Port id_gyroSPIPort = SPI.Port.kOnboardCS0;
+
+    //TODO: Currently 10 sec (20190115) Needs empirical testing
+    public static double kGyroCaliibrateAvgTime = 10;
+    //TODO: Tune using the code in the Test Periodic (20190115)
+    public static double kGyroTargetAngleThresh = 10;
+    public static double kGyro_P = 0;
+
+    /***********SPEED_CONTROLLER_IDs**********/
 
     //Drivetrain - Currently Using 2018 Standards
     public static final int id_driveLeftMaster = 1;
