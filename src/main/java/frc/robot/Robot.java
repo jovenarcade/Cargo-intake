@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -115,5 +116,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+     boolean enableGyroSpinTesting = SmartDashboard.getBoolean("enableGyroSpinTest", false);
+     double kP = SmartDashboard.getNumber("GyroPGain:", 0);
+     if (enableGyroSpinTesting){
+         double angle = SmartDashboard.getNumber("Spin Gyro to:", 0);
+         double turningValue = (angle - mDrive.getGyro().getAngle()) * kP;
+         // Invert the direction of the turn if we are going backwards
+         turningValue = Math.copySign(turningValue, m_joystick.getY());
+         mDrive.getDrive().arcadeDrive(m_joystick.getY(), turningValue);
+     } else {
+         mDrive.getDrive().arcadeDrive(m_joystick.getY(), m_joystick.getX());
+     }
   }
 }
