@@ -42,6 +42,10 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    //Restart Robot Code @ beginning of every match. This will zero gyro. Takes ~10 sec
+    mDrive.calibrateGyro();
+    mDrive.zeroSensors();
   }
 
   /**
