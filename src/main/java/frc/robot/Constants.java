@@ -15,7 +15,7 @@ public class Constants {
     public static SPI.Port id_gyroSPIPort = SPI.Port.kOnboardCS0;
 
     //TODO: Needs tuning
-    public static double kGyroDegPerRot = 356.2; //Tested once 20190116
+    public static double kGyroDegPerRot = 356.2; //Tested once 20190116 on 2017 robot
     //TODO: Currently 10 sec (20190115) Needs empirical testing
     // Testing on 20190116: 4.42, 4.57, 5.17, 5.08 
     public static double kGyroCalibrateAvgTime = 10;

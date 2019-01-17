@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
 
     //Restart Robot Code @ beginning of every match. This will zero gyro. Takes ~10 sec
-//    mDrive.calibrateGyro();
+    //mDrive.calibrateGyro();
     // mDrive.getGyro().calibrate(); //Switched because it was delaying robot init
     mDrive.zeroSensors();
   }
@@ -112,6 +112,7 @@ public class Robot extends TimedRobot {
   }
 
   public void testInit(){
+      //TODO: Why doesn't smartdash seem to work here? Maybe try shuffleboard
     SmartDashboard.putBoolean("enableGyroSpinTest", false);
     SmartDashboard.putNumber("spin_to", 0);
     SmartDashboard.putNumber("GyroPGain:", 0);
