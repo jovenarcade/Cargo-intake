@@ -33,4 +33,8 @@ public class Controllers {
     public double getTurn() {
         return mDriveStick.getRawAxis(JoystickConstants.kXBOX_RJoyX);
     }
+
+    public boolean driveStraightWithGyro() {
+        return mDriveStick.getRawButton(JoystickConstants.kXBOX_LBump);
+    }
 }

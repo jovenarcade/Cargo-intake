@@ -103,6 +103,14 @@ public class DriveBase extends Subsystem {
         mDiffDrive_.arcadeDrive(0, rotation);
     }
 
+    //TODO: Needs Testing
+    public void simpleGyroStraightDrive(double throttle){
+        zeroSensors();
+        double error = -gyro_.getAngle();
+        double rotation = error * Constants.kGyro_P;
+        getDrive().arcadeDrive(throttle, rotation, false);
+    }
+
     public boolean isFacingTargetAngle() {
         return isFacingTargetAngle;
     }
