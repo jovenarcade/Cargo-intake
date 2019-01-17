@@ -75,11 +75,10 @@ public class DriveBase extends Subsystem {
     public void calibrateGyro(){
         Timer.delay(0.1);
         isGyroCalibrating = true;
-        System.out.println("Gyro Calibration Started...");
+        System.out.println("Gyro Calibration Started. Hold Still...");
         gyro_.calibrate();
-        Timer.delay(Constants.kGyroCaliibrateAvgTime);
-        System.out.println("Gyro Calibration Finished.");
         isGyroCalibrating = false;
+        System.out.println("Gyro Calibration Finished.");
     }
 
     public void turnToAngle(double targetAngle){

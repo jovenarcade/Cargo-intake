@@ -15,6 +15,7 @@ public class Constants {
     public static SPI.Port id_gyroSPIPort = SPI.Port.kOnboardCS0;
 
     //TODO: Currently 10 sec (20190115) Needs empirical testing
+    // Testing on 20190116: 4.42, 4.57, 5.17, 5.08 
     public static double kGyroCaliibrateAvgTime = 10;
     //TODO: Tune using the code in the Test Periodic (20190115)
     public static double kGyroTargetAngleThresh = 10;
