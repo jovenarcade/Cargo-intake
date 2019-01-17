@@ -49,7 +49,10 @@ public class DriveBase extends Subsystem {
         leftSlave_.follow(leftMaster_);
         rightMaster_.set(ControlMode.PercentOutput, 0);
         rightSlave_.follow(rightMaster_);
-        rightMaster_.setInverted(true);
+
+//        This is kinda weird but here we are, 2017 robot does not need this
+//        rightMaster_.setInverted(true);
+//        rightSlave_.setInverted(true);
 
 //        Todo: Determine if setting sensor phase is needed
 //        Sets the phase of the sensor. Use when controller forward/reverse output doesn't correlate to appropriate
@@ -82,17 +85,22 @@ public class DriveBase extends Subsystem {
     }
 
     public void turnToAngle(double targetAngle){
-        stop();
         double error = targetAngle - gyro_.getAngle();
+        double rotation;
+
+        stop();
 
         if (error > Constants.kGyroTargetAngleThresh) {
-            mDiffDrive_.arcadeDrive(0, error*Constants.kGyro_P);
+            rotation = error * Constants.kGyro_P;
+            System.out.println("error" + error);
             System.out.println("Turning to angle " + targetAngle);
         } else {
-            stop();
+            rotation = 0;
             isFacingTargetAngle = true;
             System.out.println("Done Turning");
         }
+
+        mDiffDrive_.arcadeDrive(0, rotation);
     }
 
     public boolean isFacingTargetAngle() {
@@ -119,7 +127,7 @@ public class DriveBase extends Subsystem {
 
     @Override
     public void zeroSensors() {
-        System.out.println("Drive Encoders and Gyro Zeroed");
+        System.out.println("Drive Encoders and Gyro Zeroed.");
         gyro_.reset();
         leftMaster_.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         rightMaster_.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
