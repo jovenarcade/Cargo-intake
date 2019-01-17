@@ -1,4 +1,4 @@
-package frc.robot;
+ package frc.robot;
 
 /*
 * A locale for all robot constants.
@@ -9,9 +9,22 @@ import edu.wpi.first.wpilibj.SPI;
 
 public class Constants {
 
-    /***********HARDWARE_IDs**********/
+    /***********GYRO STUFF**********/
 
+    //Gyro physical location
     public static SPI.Port id_gyroSPIPort = SPI.Port.kOnboardCS0;
+
+    //TODO: Needs tuning
+    public static double kGyroDegPerRot = 356.2; //Tested once 20190116 on 2017 robot
+    //TODO: Currently 10 sec (20190115) Needs empirical testing
+    // Testing on 20190116: 4.42, 4.57, 5.17, 5.08 
+    public static double kGyroCalibrateAvgTime = 10;
+    //TODO: Tune using the code in the Test Periodic (20190115)
+    // 20190116 - worked pretty well on 2017 robot shooting to 100 deg with kP of 0.1 and thresh of 2
+    public static double kGyroTargetAngleThresh = 2;
+    public static double kGyro_P = 0.1;
+
+    /***********SPEED_CONTROLLER_IDs**********/
 
     //Drivetrain - Currently Using 2018 Standards
     public static final int id_driveLeftMaster = 1;

@@ -7,8 +7,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,6 +44,11 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    //Restart Robot Code @ beginning of every match. This will zero gyro. Takes ~10 sec
+    //mDrive.calibrateGyro();
+    // mDrive.getGyro().calibrate(); //Switched because it was delaying robot init
+    mDrive.zeroSensors();
   }
 
   /**
@@ -55,8 +62,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     mDrive.outputToSmartDashboard();
-
-
   }
 
   /**
@@ -98,11 +103,24 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    mDrive.getDrive().arcadeDrive(m_joystick.getY(), m_joystick.getX());
+//Works for blue logitech on 2017 robot
+    mDrive.getDrive().arcadeDrive(-m_joystick.getY(), m_joystick.getX());
   }
 
   public void disabledPeriodic(){
     mDrive.stop();
+  }
+
+  public void testInit(){
+      //TODO: Why doesn't smartdash seem to work here? Maybe try shuffleboard
+    SmartDashboard.putBoolean("enableGyroSpinTest", false);
+    SmartDashboard.putNumber("spin_to", 0);
+    SmartDashboard.putNumber("GyroPGain:", 0);
+    System.out.println(m_joystick.getAxisCount());
+
+    mDrive.zeroSensors();
+    mDrive.calibrateGyro();
+
   }
 
   /**
@@ -110,5 +128,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+//     boolean enableGyroSpinTesting = SmartDashboard.getBoolean("enableGyroSpinTest", false);
+//     double kP = SmartDashboard.getNumber("GyroPGain:", 0);
+//     if (enableGyroSpinTesting){
+//         double angle = SmartDashboard.getNumber("Spin Gyro to:", 10);
+//         double turningValue = (angle - mDrive.getGyro().getAngle()) * kP;
+//         // Invert the direction of the turn if we are going backwards
+//         turningValue = Math.copySign(turningValue, m_joystick.getY());
+//         mDrive.getDrive().arcadeDrive(m_joystick.getY(), turningValue);
+//     } else {
+//         mDrive.getDrive().arcadeDrive(m_joystick.getY(), m_joystick.getX());
+//     }
+    mDrive.turnToAngle(120);
+    mDrive.outputToSmartDashboard();
+
   }
 }
