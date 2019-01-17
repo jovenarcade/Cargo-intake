@@ -29,10 +29,7 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  /*TODO: Temp for testing*/
-  private Joystick m_joystick = new Joystick(0);
-  //
-
+  Controllers mControls = Controllers.getInstance();
   DriveBase mDrive = DriveBase.getInstance();
 
   /**
@@ -103,8 +100,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-//Works for blue logitech on 2017 robot
-    mDrive.getDrive().arcadeDrive(-m_joystick.getY(), m_joystick.getX());
+//TODO: Needs testing
+    mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
   }
 
   public void disabledPeriodic(){
@@ -116,7 +113,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("enableGyroSpinTest", false);
     SmartDashboard.putNumber("spin_to", 0);
     SmartDashboard.putNumber("GyroPGain:", 0);
-    System.out.println(m_joystick.getAxisCount());
 
     mDrive.zeroSensors();
     mDrive.calibrateGyro();
