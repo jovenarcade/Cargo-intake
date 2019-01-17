@@ -105,7 +105,7 @@ public class DriveBase extends Subsystem {
 
     //TODO: Needs Testing
     public void simpleGyroStraightDrive(double throttle){
-        zeroSensors(); //This line might cause problems later ... bware
+        // zeroSensors(); //This line might cause problems later ... bware
         double error = -gyro_.getAngle();
         double rotation = error * Constants.kGyro_P;
         getDrive().arcadeDrive(throttle, rotation, false);
