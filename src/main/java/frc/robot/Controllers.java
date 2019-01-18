@@ -1,6 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.util.JoystickConstants;
 
 /**
@@ -36,5 +38,11 @@ public class Controllers {
 
     public boolean driveStraightWithGyro() {
         return mDriveStick.getRawButton(JoystickConstants.kXBOX_LBump);
+    }
+
+    public void setVibrateSeconds(int vibrateSeconds){
+        mDriveStick.setRumble(GenericHID.RumbleType.kRightRumble, 1);
+        mDriveStick.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
+        Timer.delay(vibrateSeconds);
     }
 }

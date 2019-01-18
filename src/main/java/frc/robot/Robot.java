@@ -101,11 +101,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 //TODO: Needs MAJOR testing
-      if (mControls.driveStraightWithGyro()) {
-          mDrive.simpleGyroStraightDrive(mControls.getThrottle());
-      } else {
-          mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
-      }
+    if (mControls.driveStraightWithGyro()) {
+        mDrive.simpleGyroStraightDrive(mControls.getThrottle());
+        mControls.setVibrateSeconds(2);
+    } else {
+        mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
+    }
   }
 
   public void disabledPeriodic(){
