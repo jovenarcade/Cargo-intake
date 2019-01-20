@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    SmartDashboard.putNumber("spin-to:", 0);
 
     //Restart Robot Code @ beginning of every match. This will zero gyro. Takes ~10 sec
     //mDrive.calibrateGyro();
@@ -101,11 +102,18 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 //TODO: Needs MAJOR testing
-    if (mControls.driveStraightWithGyro()) {
-        mDrive.simpleGyroStraightDrive(mControls.getThrottle());
-        mControls.setVibrateSeconds(2);
+    System.out.println(SmartDashboard.getNumber("spin-to:", 0));
+
+    if (mControls.driveStraightWithGyro()){
+      mDrive.move(mControls.getThrottle(), mControls.getTurn());
+      mDrive.rotateToAngle(mDrive.getGyro().getAngle());
+      mDrive.execute();
+//      mDrive.driveStraightCurrentAngle(mControls.getThrottle());
+    } else if (mControls.spinGyroToAngle()){
+      mDrive.rotateToAngle(SmartDashboard.getNumber("spin-to:", 0));
+      mDrive.execute();
     } else {
-        mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
+      mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
     }
   }
 
@@ -140,7 +148,6 @@ public class Robot extends TimedRobot {
 //     } else {
 //         mDrive.getDrive().arcadeDrive(m_joystick.getY(), m_joystick.getX());
 //     }
-    mDrive.turnToAngle(120);
     mDrive.outputToSmartDashboard();
 
   }

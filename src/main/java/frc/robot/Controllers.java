@@ -37,7 +37,15 @@ public class Controllers {
     }
 
     public boolean driveStraightWithGyro() {
-        return mDriveStick.getRawButton(JoystickConstants.kXBOX_LBump);
+        return mDriveStick.getRawButton(JoystickConstants.kF310_LBump);
+    }
+
+    public boolean getValuesFromSmartDashboard() {
+        return mDriveStick.getRawButton(JoystickConstants.kF310_Start);
+    }
+
+    public boolean spinGyroToAngle() {
+        return mDriveStick.getRawButton(JoystickConstants.kF310_RBump);
     }
 
     public void setVibrateSeconds(int vibrateSeconds){

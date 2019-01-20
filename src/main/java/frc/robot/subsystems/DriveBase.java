@@ -29,6 +29,8 @@ public class DriveBase extends Subsystem {
 
     private boolean isGyroCalibrating = false;
     private boolean isFacingTargetAngle = false;
+    private double rotation;
+    private double throttle;
 
     // The constructor instantiates all of the drivetrain components when the
     // robot powers up
@@ -84,32 +86,89 @@ public class DriveBase extends Subsystem {
         System.out.println("Gyro Calibration Finished.");
     }
 
-    public void turnToAngle(double targetAngle){
+//   function rotateToAngle(targetAngle):
+//    error = targetAngle - gyroAngle # check out wpilib documentation for getting the angle from the gyro
+//    if error > threshold
+//        this.rotation =  error*kP
+//        return False
+//    else:
+//        this.rotation = 0
+//        return True
+//
+
+    public double rotateToAngle(double targetAngle){
+//        zeroSensors();
         double error = targetAngle - gyro_.getAngle();
-        double rotation;
-
-        stop();
-
-        if (error > Constants.kGyroTargetAngleThresh) {
-            rotation = error * Constants.kGyro_P;
-            System.out.println("error" + error);
-            System.out.println("Turning to angle " + targetAngle);
+        if (Math.abs(error) > Constants.kGyroTargetAngleThresh){
+            return this.rotation =  error * Constants.kGyro_P;
+//            return false;
         } else {
-            rotation = 0;
-            isFacingTargetAngle = true;
-            System.out.println("Done Turning");
+            return this.rotation = 0;
+//            return true;
         }
-
-        mDiffDrive_.arcadeDrive(0, rotation);
     }
+//function move(fwd, rotation):
+//    // This function allows for joystick input
+//    this.fwd = fwd
+//    this.rotation = rotation
+//
+    public void move(double throttle, double rotation){
+        this.throttle = throttle;
+        this.rotation = rotation;
+    }
+//function execute():
+//    // Execute function that should be called every loop
+//    this.robotdrive.drive(this.fwd, this.rotation)
+//
+//    this.fwd = 0
+//    this.rotation = 0
+
+    public void execute(){
+        this.getDrive().arcadeDrive(this.throttle, this.rotation);
+        this.throttle = 0;
+        this.rotation = 0;
+    }
+
+
+//    public void turnToAngle(){
+//        getDrive().arcadeDrive(0, this.rotation);
+//    }
+//
+//    public void calculateRotateValue(double targetAngle){
+//        zeroSensors();
+//        double error = targetAngle - gyro_.getAngle();
+//        if (error > Constants.kGyroTargetAngleThresh){
+//            rotation =  error * Constants.kGyro_P;
+//        } else {
+//            rotation = 0;
+//        }
+//    }
+//
+//    public void driveStraightCurrentAngle(double throttle){
+//        getDrive().arcadeDrive(throttle, this.rotation);
+//    }
+
+//    public void turnToAngle(double targetAngle){
+//        double error = targetAngle - gyro_.getAngle();
+//
+//        if (error > Constants.kGyroTargetAngleThresh) {
+//            this.rotation = error * Constants.kGyro_P;
+//            System.out.println("error" + error);
+//            System.out.println("Turning to angle " + targetAngle);
+//        } else {
+//            this.rotation = 0;
+//            isFacingTargetAngle = true;
+//            System.out.println("Done Turning");
+//        }
+//    }
 
     //TODO: Needs Testing
-    public void simpleGyroStraightDrive(double throttle){
-        // zeroSensors(); //This line might cause problems later ... bware
-        double error = -gyro_.getAngle();
-        double rotation = error * Constants.kGyro_P;
-        getDrive().arcadeDrive(throttle, rotation, false);
-    }
+//    public void driveStraightCurrentAngle(double throttle){
+//        // zeroSensors(); //This line might cause problems later ... bware
+//        double error = -gyro_.getAngle();
+//        double rotation = error * Constants.kGyro_P;
+////        getDrive().arcadeDrive(throttle, rotation, false);
+//    }
 
     public boolean isFacingTargetAngle() {
         return isFacingTargetAngle;
