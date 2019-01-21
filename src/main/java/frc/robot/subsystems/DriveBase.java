@@ -96,9 +96,12 @@ public class DriveBase extends Subsystem {
 //        return True
 //
 
+//    This is for absolute angle
     public double rotateToAngle(double targetAngle){
 //        zeroSensors();
         double error = targetAngle - gyro_.getAngle();
+        //For relative angle: (just need to replace storedGyro with the actual thing.....
+//        double error = (targetAngle + storedGyroFromMethodCall) - gyro_.getAngle();
         if (Math.abs(error) > Constants.kGyroTargetAngleThresh){
             return this.rotation =  error * Constants.kGyro_P;
 //            return false;
