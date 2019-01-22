@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("spin-to:", 0);
 
     //Restart Robot Code @ beginning of every match. This will zero gyro. Takes ~10 sec
-    //mDrive.calibrateGyro();
+    mDrive.calibrateGyro();
     // mDrive.getGyro().calibrate(); //Switched because it was delaying robot init
     mDrive.zeroSensors();
   }
@@ -104,13 +104,17 @@ public class Robot extends TimedRobot {
 //TODO: Needs MAJOR testing
     System.out.println(SmartDashboard.getNumber("spin-to:", 0));
 
+    mDrive.setTalonControlMode(DriveBase.ControlMode.RAW);
+
     if (mControls.driveStraightWithGyro()){
       mDrive.move(mControls.getThrottle(), mControls.getTurn());
       mDrive.rotateToAngle(mDrive.getGyro().getAngle());
       mDrive.execute();
 //      mDrive.driveStraightCurrentAngle(mControls.getThrottle());
     } else if (mControls.spinGyroToAngle()){
-      mDrive.rotateToAngle(SmartDashboard.getNumber("spin-to:", 0));
+      mDrive.setPIDFromSmartDashboard();
+      mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
+      mDrive.setSetpoint(SmartDashboard.getNumber("spin-to:", 0));
       mDrive.execute();
     } else {
       mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
