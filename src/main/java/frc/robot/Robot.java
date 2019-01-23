@@ -102,23 +102,33 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 //TODO: Needs MAJOR testing
-    System.out.println(SmartDashboard.getNumber("spin-to:", 0));
+//    System.out.println(SmartDashboard.getNumber("spin-to:", 0));
 
     mDrive.setTalonControlMode(DriveBase.ControlMode.RAW);
+    mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
 
     if (mControls.driveStraightWithGyro()){
-      mDrive.move(mControls.getThrottle(), mControls.getTurn());
-      mDrive.rotateToAngle(mDrive.getGyro().getAngle());
-      mDrive.execute();
-//      mDrive.driveStraightCurrentAngle(mControls.getThrottle());
+        mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
+        mDrive.setRelativeSetpoint(0);
+        mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mDrive.getGyroPIDOutput());
     } else if (mControls.spinGyroToAngle()){
-      mDrive.setPIDFromSmartDashboard();
-      mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
-      mDrive.setSetpoint(SmartDashboard.getNumber("spin-to:", 0));
-      mDrive.execute();
-    } else {
-      mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
+        mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
+        mDrive.setRelativeSetpoint(SmartDashboard.getNumber("spin-to:", 0));
+        mDrive.getDrive().arcadeDrive(0, mDrive.getGyroPIDOutput());
     }
+
+//      mDrive.move(mControls.getThrottle(), mControls.getTurn());
+//      mDrive.rotateToAngle(mDrive.getGyro().getAngle());
+//      mDrive.execute();
+////      mDrive.driveStraightCurrentAngle(mControls.getThrottle());
+//    } else if (mControls.spinGyroToAngle()){
+//      mDrive.setPIDFromSmartDashboard();
+//      mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
+//      mDrive.setSetpoint(SmartDashboard.getNumber("spin-to:", 0));
+//      mDrive.execute();
+//    } else {
+//      mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
+//    }
   }
 
   public void disabledPeriodic(){

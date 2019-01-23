@@ -89,8 +89,9 @@ public class DriveBase extends Subsystem {
                     @Override
                     public void pidWrite(double output) {
                         //Turn robot however much the PID controller tells us to
-                        //RobotDrive and Gyro have different directions set to +
-                        mDiffDrive_.arcadeDrive(0, -output);
+                        //RobotDrive and Gyro have different directions set to + TODO: I dont think this is still true
+//                        mDiffDrive_.arcadeDrive(0, -output);
+                        rotation = output;
                     }
                 });
         //Robot can turn either way to reach setpoint; do whichever is shortest
@@ -108,12 +109,21 @@ public class DriveBase extends Subsystem {
         System.out.println("Gyro Calibration Finished.");
     }
 
+    public double getGyroPIDOutput(){
+        return rotation;
+    }
 
     public DifferentialDrive getDrive(){
         setTalonControlMode(ControlMode.RAW);
         return mDiffDrive_;
     }
 
+//    If the similar design works in teleopPeriodic, try it here
+    public void getGyroDrive(double throttle, double relativeSetpoint){
+        setAssistMode(DriveBase.AssistMode.HEADING);
+        setRelativeSetpoint(relativeSetpoint);
+        getDrive().arcadeDrive(throttle, getGyroPIDOutput());
+    }
 
     public enum ControlMode{
         RAW, ENCODER_VEL, ENCODER_POS
@@ -153,6 +163,7 @@ public class DriveBase extends Subsystem {
             case HEADING:
                 setTalonControlMode(ControlMode.RAW);
                 headingPIDController_.enable();
+                System.out.println("Gyro PID Out: " + rotation);
                 break;
             case LINEAR:
                 setTalonControlMode(ControlMode.ENCODER_POS);
