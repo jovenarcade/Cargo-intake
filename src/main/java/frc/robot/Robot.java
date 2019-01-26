@@ -22,6 +22,10 @@ import frc.robot.subsystems.DriveBase;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
  * project.
+ *
+ * Execute "gradlew deploy -PteamNumber=4123  -Dorg.gradle.java.home="C:\Users\Public\frc2019\jdk""
+ * in terminal do deploy
+ *
  */
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
@@ -102,6 +106,8 @@ public class Robot extends TimedRobot {
 
   public void teleopInit(){
     mDrive.zeroSensors();
+    mDrive.setRelativeSetpoint(0);
+
   }
 
   /**
@@ -113,12 +119,12 @@ public class Robot extends TimedRobot {
 //    System.out.println(SmartDashboard.getNumber("spin-to:", 0));
 
     mDrive.setPIDFromSmartDashboard();
-    mDrive.setRelativeSetpoint(0);
-    
+
     if (mControls.driveStraightWithGyro()){
 
       mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
       mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mDrive.getGyroPIDOutput());
+      System.out.println("mDrive.getSetpointError() = " + mDrive.getSetpointError());
       //    } else if (mControls.spinGyroToAngle()){
         //        mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
         //        mDrive.setRelativeSetpoint(SmartDashboard.getNumber("spin-to:", 0));

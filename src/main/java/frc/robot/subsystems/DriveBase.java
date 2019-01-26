@@ -102,9 +102,12 @@ public class DriveBase extends Subsystem {
                 });
         //Robot can turn either way to reach setpoint; do whichever is shortest
         headingPIDController_.setInputRange(-180, 180);
-        headingPIDController_.setOutputRange(-10, 10);
+//        headingPIDController_.setOutputRange(-10, 10);
         headingPIDController_.setContinuous(true);
         //TODO What's our min and max? setContinuous is useless without one. - NO IDEA IF THESE ARE EVEN REMOTELY RIGHT
+        //Output range doesn't seem to make a difference, or im not using it right, but the input of -180 180 is great
+        //for turning shortest distance possible
+        // tested on 2017 robot on concrete in LC - 01262019
     }
 
     public void calibrateGyro(){

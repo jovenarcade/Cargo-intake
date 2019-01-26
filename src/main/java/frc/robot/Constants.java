@@ -21,6 +21,7 @@ public class Constants {
     public static double kGyroCalibrateAvgTime = 10;
     //TODO: Tune using the code in the Test Periodic (20190115)
     // 20190116 - worked pretty well on 2017 robot shooting to 100 deg with kP of 0.1 and thresh of 2
+    // KP was even better at 0.015? - 01262019
     public static double kGyroTargetAngleThresh = 2;
     public static double kGyro_P = 0.1;
 
