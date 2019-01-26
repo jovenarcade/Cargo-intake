@@ -1,14 +1,14 @@
 package frc.robot.util;
 
-public class JoystickConstants {
+public class JoystickConstants<RJoyx, WORD, XINPUT_VIBRATION, _XINPUT_VIBRATION> {
 
     /*Currently sourced from
-    * http://www.team358.org/files/programming/ControlSystem2015-2019/images/XBoxControlMapping.jpg
-    * and
-    * http://team358.org/files/programming/ControlSystem2009-/components.php
-    * and
-    * http://eidetec.com/frc-controller
-    * */
+     * http://www.team358.org/files/programming/ControlSystem2015-2019/images/XBoxControlMapping.jpg
+     * and
+     * http://team358.org/files/programming/ControlSystem2009-/components.php
+     * and
+     * http://eidetec.com/frc-controller
+     * */
 
     //**XBOX Controller**//
     //Button Constants - Verified on BassSteel with Eclipse project 2018MotionProfileTest
@@ -70,4 +70,26 @@ public class JoystickConstants {
     public static final int kX3D_Y = 1; //Left is negative
     public static final int kX3D_Twist = 2; //Left is negative
     public static final int kX3D_Potentiometer = 3; //Note that indicated positive on the controller is negative is code. Up is -1
+
+    //**Sony PlayStation DualShock**//
+    public static final int kDualShock_LJoyX = 0;
+    public static final int kDualShock_LJoyY = 1;
+    public static final int kDualShock_RJoyX = 2;
+    public static final int kDualShock_RJoyY = 3;
+    public static final int kDualShock_SButton = 1;
+    public static final int kDualShock_TButton = 4;
+    public static final int kDualShock_CButton = 3;
+    public static final int kDualShock_XButton = 2;
+    public static final int kDualShock_LTrggerL2 = 7;
+    public static final int kDualShock_LTrggerL1 = 5;
+    public static final int kDualShock_RTrggerL2 = 8;
+    public static final int kDualShock_RTrggerL1 = 6;
+    public static final int kDualShock_LJoyPress = 11;
+    public static final int kDualShock_RJoyPress = 12;
+    public static final int kDualShock_OButton = 10;
+    public static final int KDualShock_SButton = 9;
+    public static final int KDualShock_PS4Button = 13;
+    public static final int KDualShock_Dpad = 14;
+    
 }
+
