@@ -47,6 +47,10 @@ public class Robot extends TimedRobot {
     mDrive.calibrateGyro();
     // mDrive.getGyro().calibrate(); //Switched because it was delaying robot init
     mDrive.zeroSensors();
+
+    SmartDashboard.putNumber("headingPID_P", Constants.kHeadingClosedLoop_P);
+      SmartDashboard.putNumber("headingPID_I", Constants.kHeadingClosedLoop_I);
+      SmartDashboard.putNumber("headingPID_D", Constants.kHeadingClosedLoop_D);
   }
 
   /**
@@ -96,6 +100,10 @@ public class Robot extends TimedRobot {
     }
   }
 
+  public void teleopInit(){
+    mDrive.zeroSensors();
+  }
+
   /**
    * This function is called periodically during operator control.
    */
@@ -104,17 +112,21 @@ public class Robot extends TimedRobot {
 //TODO: Needs MAJOR testing
 //    System.out.println(SmartDashboard.getNumber("spin-to:", 0));
 
-    mDrive.setTalonControlMode(DriveBase.ControlMode.RAW);
-    mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
+    mDrive.setPIDFromSmartDashboard();
 
     if (mControls.driveStraightWithGyro()){
+
         mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
         mDrive.setRelativeSetpoint(0);
         mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mDrive.getGyroPIDOutput());
-    } else if (mControls.spinGyroToAngle()){
-        mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
-        mDrive.setRelativeSetpoint(SmartDashboard.getNumber("spin-to:", 0));
-        mDrive.getDrive().arcadeDrive(0, mDrive.getGyroPIDOutput());
+//    } else if (mControls.spinGyroToAngle()){
+//        mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
+//        mDrive.setRelativeSetpoint(SmartDashboard.getNumber("spin-to:", 0));
+//        mDrive.getDrive().arcadeDrive(0, mDrive.getGyroPIDOutput());
+    } else {
+      mDrive.setTalonControlMode(DriveBase.ControlMode.RAW);
+      mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
+
     }
 
 //      mDrive.move(mControls.getThrottle(), mControls.getTurn());

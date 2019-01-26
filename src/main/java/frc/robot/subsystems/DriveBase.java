@@ -36,8 +36,13 @@ public class DriveBase extends Subsystem {
     private double throttle;
     private double deltaAngle;
 
-    public enum AssistMode {NONE, HEADING, LINEAR}
-        AssistMode mAssistMode_ = NONE;
+    public enum AssistMode {
+        NONE,
+        HEADING,
+        LINEAR
+    }
+    AssistMode mAssistMode_ = NONE;
+
     private PIDController headingPIDController_;
 
     private ControlMode driveMode = ControlMode.RAW;
@@ -81,9 +86,10 @@ public class DriveBase extends Subsystem {
 
         setTalonControlMode(driveMode);
 
+
         //Set up a PIDController for controlling robot's heading using mGyro as a feedback sensor
         headingPIDController_ = new PIDController(
-                Constants.kGyro_P, Constants.kHeadingClosedLoop_I, Constants.kHeadingClosedLoop_D,
+                Constants.kHeadingClosedLoop_P, Constants.kHeadingClosedLoop_I, Constants.kHeadingClosedLoop_D,
                 getGyro(),
                 new PIDOutput() {
                     @Override
@@ -95,9 +101,10 @@ public class DriveBase extends Subsystem {
                     }
                 });
         //Robot can turn either way to reach setpoint; do whichever is shortest
+        headingPIDController_.setInputRange(-180, 180);
+        headingPIDController_.setOutputRange(-10, 10);
         headingPIDController_.setContinuous(true);
-//        headingPIDController_.setOutputRange();
-        //TODO What's our min and max? setContinuous is useless without one.
+        //TODO What's our min and max? setContinuous is useless without one. - NO IDEA IF THESE ARE EVEN REMOTELY RIGHT
     }
 
     public void calibrateGyro(){
@@ -328,9 +335,9 @@ public class DriveBase extends Subsystem {
         SmartDashboard.putNumber("robotdrive_setpoint_error", getSetpointError());
 
         //Set up P I and D parameters in SmartDashboard
-        SmartDashboard.putNumber("headingPID_P", Constants.kHeadingClosedLoop_P);
-        SmartDashboard.putNumber("headingPID_I", Constants.kHeadingClosedLoop_I);
-        SmartDashboard.putNumber("headingPID_D", Constants.kHeadingClosedLoop_D);
+//        SmartDashboard.putNumber("headingPID_P", Constants.kHeadingClosedLoop_P);
+//        SmartDashboard.putNumber("headingPID_I", Constants.kHeadingClosedLoop_I);
+//        SmartDashboard.putNumber("headingPID_D", Constants.kHeadingClosedLoop_D);
     }
 
     @Override
