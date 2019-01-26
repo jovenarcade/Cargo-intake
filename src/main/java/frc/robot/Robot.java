@@ -113,19 +113,20 @@ public class Robot extends TimedRobot {
 //    System.out.println(SmartDashboard.getNumber("spin-to:", 0));
 
     mDrive.setPIDFromSmartDashboard();
-
+    mDrive.setRelativeSetpoint(0);
+    
     if (mControls.driveStraightWithGyro()){
 
-        mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
-        mDrive.setRelativeSetpoint(0);
-        mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mDrive.getGyroPIDOutput());
-//    } else if (mControls.spinGyroToAngle()){
-//        mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
-//        mDrive.setRelativeSetpoint(SmartDashboard.getNumber("spin-to:", 0));
-//        mDrive.getDrive().arcadeDrive(0, mDrive.getGyroPIDOutput());
-    } else {
-      mDrive.setTalonControlMode(DriveBase.ControlMode.RAW);
-      mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
+      mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
+      mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mDrive.getGyroPIDOutput());
+      //    } else if (mControls.spinGyroToAngle()){
+        //        mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
+        //        mDrive.setRelativeSetpoint(SmartDashboard.getNumber("spin-to:", 0));
+        //        mDrive.getDrive().arcadeDrive(0, mDrive.getGyroPIDOutput());
+      } else {
+        mDrive.setAssistMode(DriveBase.AssistMode.NONE);
+        // mDrive.setTalonControlMode(DriveBase.ControlMode.RAW);
+        mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
 
     }
 
