@@ -134,23 +134,9 @@ public class Robot extends TimedRobot {
             mDrive.getDrive().arcadeDrive(0, mDrive.getGyroPIDOutput());
         } else {
             mDrive.setAssistMode(DriveBase.AssistMode.NONE);
-            // mDrive.setTalonControlMode(DriveBase.ControlMode.RAW);
             mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
 
         }
-
-//      mDrive.move(mControls.getThrottle(), mControls.getTurn());
-//      mDrive.rotateToAngle(mDrive.getGyro().getAngle());
-//      mDrive.execute();
-////      mDrive.driveStraightCurrentAngle(mControls.getThrottle());
-//    } else if (mControls.spinGyroToAngle()){
-//      mDrive.setPIDFromSmartDashboard();
-//      mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
-//      mDrive.setSetpoint(SmartDashboard.getNumber("spin-to:", 0));
-//      mDrive.execute();
-//    } else {
-//      mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
-//    }
     }
 
     public void disabledPeriodic() {
