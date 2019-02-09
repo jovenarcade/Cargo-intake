@@ -13,6 +13,21 @@ import frc.robot.util.JoystickConstants;
 
 public class Controllers {
 
+    private boolean toggleOn = false;
+    private boolean togglePressed = false;
+
+    private boolean getToggle(Joystick joystick, int button) {
+        if(joystick.getRawButton(button)){
+            if(!togglePressed){
+                toggleOn = !toggleOn;
+                togglePressed = true;
+            }
+        }else{
+            togglePressed = false;
+        }
+        return toggleOn;
+    }
+
     private static Controllers mInstance = new Controllers();
 
     public static Controllers getInstance() {
@@ -37,7 +52,8 @@ public class Controllers {
     }
 
     public boolean driveStraightWithGyro() {
-        return mDriveStick.getRawButton(JoystickConstants.kF310_LBump);
+        return getToggle(mDriveStick, JoystickConstants.kF310_LBump);
+//        return mDriveStick.getRawButton(JoystickConstants.kF310_LBump);
     }
 
     public boolean getValuesFromSmartDashboard() {

@@ -181,6 +181,11 @@ public class DriveBase extends Subsystem {
                 break;
         }
     }
+
+    public AssistMode getAssistMode() {
+        return mAssistMode_;
+    }
+
     /**
      * Set HEADING or LINEAR setpoint, depending on TribeRobotDrive's current assistMode
      */

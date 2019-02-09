@@ -81,7 +81,7 @@ public class Constants {
     public static final double kDriveRightD = 0;
     public static final double kLinearClosedLoop_Tolerance_Default = 1024;
 
-    public static final double kHeadingClosedLoop_P = 0;
+    public static final double kHeadingClosedLoop_P = 0.015;
     public static final double kHeadingClosedLoop_I = 0;
     public static final double kHeadingClosedLoop_D = 0;
     public static final double kHeadingClosedLoop_Tolerance_Default = 1;
