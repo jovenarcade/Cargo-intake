@@ -1,6 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.util.JoystickConstants;
 
 /**
@@ -10,6 +12,21 @@ import frc.robot.util.JoystickConstants;
  */
 
 public class Controllers {
+
+    private boolean toggleOn = false;
+    private boolean togglePressed = false;
+
+    private boolean getToggle(Joystick joystick, int button) {
+        if(joystick.getRawButton(button)){
+            if(!togglePressed){
+                toggleOn = !toggleOn;
+                togglePressed = true;
+            }
+        }else{
+            togglePressed = false;
+        }
+        return toggleOn;
+    }
 
     private static Controllers mInstance = new Controllers();
 
@@ -32,5 +49,24 @@ public class Controllers {
 
     public double getTurn() {
         return mDriveStick.getRawAxis(JoystickConstants.kXBOX_RJoyX);
+    }
+
+    public boolean driveStraightWithGyro() {
+        return getToggle(mDriveStick, JoystickConstants.kF310_LBump);
+//        return mDriveStick.getRawButton(JoystickConstants.kF310_LBump);
+    }
+
+    public boolean getValuesFromSmartDashboard() {
+        return mDriveStick.getRawButton(JoystickConstants.kF310_Start);
+    }
+
+    public boolean spinGyroToAngle() {
+        return mDriveStick.getRawButton(JoystickConstants.kF310_RBump);
+    }
+
+    public void setVibrateSeconds(int vibrateSeconds){
+        mDriveStick.setRumble(GenericHID.RumbleType.kRightRumble, 1);
+        mDriveStick.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
+        Timer.delay(vibrateSeconds);
     }
 }

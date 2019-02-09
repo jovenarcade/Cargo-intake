@@ -22,108 +22,143 @@ import frc.robot.subsystems.DriveBase;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
  * project.
+ * <p>
+ * Execute "gradlew deploy -PteamNumber=4123  -Dorg.gradle.java.home="C:\Users\Public\frc2019\jdk""
+ * in terminal do deploy
  */
 public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+    private static final String kDefaultAuto = "Default";
+    private static final String kCustomAuto = "My Auto";
+    private String m_autoSelected;
+    private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  Controllers mControls = Controllers.getInstance();
-  DriveBase mDrive = DriveBase.getInstance();
+    Controllers mControls = Controllers.getInstance();
+    DriveBase mDrive = DriveBase.getInstance();
 
-  /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
-   */
-  @Override
-  public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
+     */
+    @Override
+    public void robotInit() {
+        m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+        m_chooser.addOption("My Auto", kCustomAuto);
+        SmartDashboard.putData("Auto choices", m_chooser);
+        SmartDashboard.putNumber("spin-to:", 0);
 
-    //Restart Robot Code @ beginning of every match. This will zero gyro. Takes ~10 sec
-    //mDrive.calibrateGyro();
-    // mDrive.getGyro().calibrate(); //Switched because it was delaying robot init
-    mDrive.zeroSensors();
-  }
+        //Restart Robot Code @ beginning of every match. This will zero gyro. Takes ~10 sec
+        mDrive.calibrateGyro();
+        // mDrive.getGyro().calibrate(); //Switched because it was delaying robot init
+        mDrive.zeroSensors();
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
-   */
-  @Override
-  public void robotPeriodic() {
-    mDrive.outputToSmartDashboard();
-  }
-
-  /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString line to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional comparisons to
-   * the switch structure below with additional strings. If using the
-   * SendableChooser make sure to add them to the chooser code above as well.
-   */
-  @Override
-  public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
-  }
-
-  /**
-   * This function is called periodically during autonomous.
-   */
-  @Override
-  public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
+        SmartDashboard.putNumber("headingPID_P", Constants.kHeadingClosedLoop_P);
+        SmartDashboard.putNumber("headingPID_I", Constants.kHeadingClosedLoop_I);
+        SmartDashboard.putNumber("headingPID_D", Constants.kHeadingClosedLoop_D);
     }
-  }
 
-  /**
-   * This function is called periodically during operator control.
-   */
-  @Override
-  public void teleopPeriodic() {
-//TODO: Needs testing
-    mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
-  }
+    /**
+     * This function is called every robot packet, no matter the mode. Use
+     * this for items like diagnostics that you want ran during disabled,
+     * autonomous, teleoperated and test.
+     *
+     * <p>This runs after the mode specific periodic functions, but before
+     * LiveWindow and SmartDashboard integrated updating.
+     */
+    @Override
+    public void robotPeriodic() {
+        mDrive.outputToSmartDashboard();
+    }
 
-  public void disabledPeriodic(){
-    mDrive.stop();
-  }
+    /**
+     * This autonomous (along with the chooser code above) shows how to select
+     * between different autonomous modes using the dashboard. The sendable
+     * chooser code works with the Java SmartDashboard. If you prefer the
+     * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+     * getString line to get the auto name from the text box below the Gyro
+     *
+     * <p>You can add additional auto modes by adding additional comparisons to
+     * the switch structure below with additional strings. If using the
+     * SendableChooser make sure to add them to the chooser code above as well.
+     */
+    @Override
+    public void autonomousInit() {
+        m_autoSelected = m_chooser.getSelected();
+        // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+        System.out.println("Auto selected: " + m_autoSelected);
+    }
 
-  public void testInit(){
-      //TODO: Why doesn't smartdash seem to work here? Maybe try shuffleboard
-    SmartDashboard.putBoolean("enableGyroSpinTest", false);
-    SmartDashboard.putNumber("spin_to", 0);
-    SmartDashboard.putNumber("GyroPGain:", 0);
+    /**
+     * This function is called periodically during autonomous.
+     */
+    @Override
+    public void autonomousPeriodic() {
+        switch (m_autoSelected) {
+            case kCustomAuto:
+                // Put custom auto code here
+                break;
+            case kDefaultAuto:
+            default:
+                // Put default auto code here
+                break;
+        }
+    }
 
-    mDrive.zeroSensors();
-    mDrive.calibrateGyro();
+    public void teleopInit() {
+        mDrive.zeroSensors();
+        mDrive.setRelativeSetpoint(0);
 
-  }
+    }
 
-  /**
-   * This function is called periodically during test mode.
-   */
-  @Override
-  public void testPeriodic() {
+    /**
+     * This function is called periodically during operator control.
+     */
+    @Override
+    public void teleopPeriodic() {
+//TODO: Needs MAJOR testing
+//    System.out.println(SmartDashboard.getNumber("spin-to:", 0));
+
+        mDrive.setPIDFromSmartDashboard();
+
+
+        if (mControls.driveStraightWithGyro()) {
+            // First time enter heading mode, set relative to 0 to keep current heading
+            if (mDrive.getAssistMode() != DriveBase.AssistMode.HEADING) {
+                mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
+                mDrive.setRelativeSetpoint(0);
+            }
+            mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mDrive.getGyroPIDOutput());
+            System.out.println("mDrive.getSetpointError() = " + mDrive.getSetpointError());
+        } else if (mControls.spinGyroToAngle()) {
+            mDrive.setAssistMode(DriveBase.AssistMode.HEADING);
+            mDrive.setSetpoint(SmartDashboard.getNumber("spin-to:", 0));
+            mDrive.getDrive().arcadeDrive(0, mDrive.getGyroPIDOutput());
+        } else {
+            mDrive.setAssistMode(DriveBase.AssistMode.NONE);
+            mDrive.getDrive().arcadeDrive(mControls.getThrottle(), mControls.getTurn());
+
+        }
+    }
+
+    public void disabledPeriodic() {
+        mDrive.stop();
+    }
+
+    public void testInit() {
+        //TODO: Why doesn't smartdash seem to work here? Maybe try shuffleboard
+        SmartDashboard.putBoolean("enableGyroSpinTest", false);
+        SmartDashboard.putNumber("spin_to", 0);
+        SmartDashboard.putNumber("GyroPGain:", 0);
+
+        mDrive.zeroSensors();
+        mDrive.calibrateGyro();
+
+    }
+
+    /**
+     * This function is called periodically during test mode.
+     */
+    @Override
+    public void testPeriodic() {
 //     boolean enableGyroSpinTesting = SmartDashboard.getBoolean("enableGyroSpinTest", false);
 //     double kP = SmartDashboard.getNumber("GyroPGain:", 0);
 //     if (enableGyroSpinTesting){
@@ -135,8 +170,7 @@ public class Robot extends TimedRobot {
 //     } else {
 //         mDrive.getDrive().arcadeDrive(m_joystick.getY(), m_joystick.getX());
 //     }
-    mDrive.turnToAngle(120);
-    mDrive.outputToSmartDashboard();
+        mDrive.outputToSmartDashboard();
 
-  }
+    }
 }

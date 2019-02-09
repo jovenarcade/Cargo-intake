@@ -21,6 +21,8 @@ public class Constants {
     public static double kGyroCalibrateAvgTime = 10;
     //TODO: Tune using the code in the Test Periodic (20190115)
     // 20190116 - worked pretty well on 2017 robot shooting to 100 deg with kP of 0.1 and thresh of 2
+    // KP was even better at 0.015? - 01262019
+    // That was too low ^^ - 02092019
     public static double kGyroTargetAngleThresh = 2;
     public static double kGyro_P = 0.1;
 
@@ -80,7 +82,7 @@ public class Constants {
     public static final double kDriveRightD = 0;
     public static final double kLinearClosedLoop_Tolerance_Default = 1024;
 
-    public static final double kHeadingClosedLoop_P = 0;
+    public static final double kHeadingClosedLoop_P = 0.015;
     public static final double kHeadingClosedLoop_I = 0;
     public static final double kHeadingClosedLoop_D = 0;
     public static final double kHeadingClosedLoop_Tolerance_Default = 1;
